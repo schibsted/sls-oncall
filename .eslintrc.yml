@@ -1,0 +1,10 @@
+extends:
+    - airbnb-base
+root: true
+env:
+    node: true
+    mocha: true
+ignorePatterns:
+    - node_modules/
+rules:
+    no-console: off

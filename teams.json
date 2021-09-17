@@ -1,0 +1,12 @@
+[
+  {
+    "name": "blocket",
+    "schedules": ["P9XYZ9K", "PYXYZGN", "P3XYZ6F"],
+    "tags": ["blocket-all", "all-blocketeers"]
+  },
+  {
+    "name": "aftonbladet",
+    "schedules": ["P1XYZ1L"],
+    "tags": ["ab"]
+  }
+]

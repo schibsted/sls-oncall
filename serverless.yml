@@ -1,0 +1,34 @@
+service: sls-oncall
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'eu-west-1'}
+  timeout: 10
+  memorySize: 256
+  logRetentionInDays: 14
+  lambdaHashingVersion: 20201221
+
+plugins:
+  - serverless-plugin-optimize
+
+functions:
+  bot:
+    handler: handler.handler
+    events:
+      - http:
+          path: bot
+          method: post
+          async: true
+          integration: lambda
+          request:
+            template:
+              application/json: ${file(templates/json)}
+              application/x-www-form-urlencoded: ${file(templates/form)}
+    environment:
+      PD_TOKEN: ${ssm:/sls-oncall/pd-token}
+      SLACK_TOKEN: ${ssm:/sls-oncall/slack-token}
+      SLACK_SIGN_SECRET: ${ssm:/sls-oncall/slack-signsecret}
+
+variablesResolutionMode: 20210326
