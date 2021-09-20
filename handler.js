@@ -10,12 +10,16 @@ const slackValidTime = process.env.SLACK_VALID_TIME || 300;
 
 module.exports.handler = async (event) => {
   console.log('Received request', event);
-  return processor.process(event, {
-    slackWebClient,
-    pagerdutyClient,
-    teams,
-  }, {
-    slackSignSecret,
-    slackValidTime,
-  });
+  try {
+    return processor.process(event, {
+      slackWebClient,
+      pagerdutyClient,
+      teams,
+    }, {
+      slackSignSecret,
+      slackValidTime,
+    });
+  } catch (e) {
+    return { statusCode: 200, headers: { 'Content-Type': 'text/plain' }, body: e.message };
+  }
 };

@@ -82,31 +82,31 @@ module.exports.process = async (event, di, config) => {
     return { statusCode: 200, headers: { 'Content-Type': 'text/plain' }, body: body.challenge };
   }
 
-  if (body.event) {
-    if (shouldIgnore(body.event)) {
-      return { statusCode: 200 };
-    }
-
-    try {
-      const { 'X-Slack-Signature': sign, 'X-Slack-Request-Timestamp': ts } = event.headers;
-      validateRequest(sign, ts, rawBody, config.slackSignSecret, config.slackValidTime);
-    } catch (e) {
-      console.log('Request invalid', e);
-      return { statusCode: 200 };
-    }
-
-    const { channel, text } = body.event;
-    let response;
-    try {
-      const teams = teamsFromText(text, di.teams);
-      const oncalls = await getOncallForTeams(teams, di.pagerdutyClient);
-      response = formatResponse(oncalls);
-    } catch (e) {
-      response = e.message;
-    }
-
-    return di.slackWebClient.chat.postMessage({ channel, text: response });
+  if (!body.event) {
+    throw new Error('Event missing');
   }
 
-  return { statusCode: 200 };
+  if (shouldIgnore(body.event)) {
+    throw new Error('Message ignored');
+  }
+
+  try {
+    const { 'X-Slack-Signature': sign, 'X-Slack-Request-Timestamp': ts } = event.headers;
+    validateRequest(sign, ts, rawBody, config.slackSignSecret, config.slackValidTime);
+  } catch (e) {
+    console.log('Request invalid', e);
+    throw new Error('Request invalid');
+  }
+
+  const { channel, text } = body.event;
+  let response;
+  try {
+    const teams = teamsFromText(text, di.teams);
+    const oncalls = await getOncallForTeams(teams, di.pagerdutyClient);
+    response = formatResponse(oncalls);
+  } catch (e) {
+    response = e.message;
+  }
+
+  return di.slackWebClient.chat.postMessage({ channel, text: response });
 };
