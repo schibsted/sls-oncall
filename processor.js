@@ -90,13 +90,8 @@ module.exports.process = async (event, di, config) => {
     throw new Error('Message ignored');
   }
 
-  try {
-    const { 'X-Slack-Signature': sign, 'X-Slack-Request-Timestamp': ts } = event.headers;
-    validateRequest(sign, ts, rawBody, config.slackSignSecret, config.slackValidTime);
-  } catch (e) {
-    console.log('Request invalid', e);
-    throw new Error('Request invalid');
-  }
+  const { 'X-Slack-Signature': sign, 'X-Slack-Request-Timestamp': ts } = event.headers;
+  validateRequest(sign, ts, rawBody, config.slackSignSecret, config.slackValidTime);
 
   const { channel, text } = body.event;
   let response;

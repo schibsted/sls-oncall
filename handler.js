@@ -20,6 +20,7 @@ module.exports.handler = async (event) => {
       slackValidTime,
     });
   } catch (e) {
+    console.log(e.message);
     return { statusCode: 200, headers: { 'Content-Type': 'text/plain' }, body: e.message };
   }
 };

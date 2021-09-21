@@ -1,0 +1,33 @@
+module.exports = {
+  body: {
+    token: 'QEJXYZZyke',
+    team_id: 'T0XYZ39',
+    api_app_id: 'A02XYZTH',
+    event: {
+      client_msg_id: '9b073bdd-e717-4f47-a08e-c860f0ac32e5',
+      type: 'message',
+      text: 'ab blocket',
+      user: 'U0XYZQE7',
+      ts: '1632215355.002000',
+      team: 'T0XYZ39',
+      blocks: [],
+      channel: 'D02XYZUFN',
+      event_ts: '1632215355.002000',
+      channel_type: 'im',
+    },
+    type: 'event_callback',
+    event_id: 'Ev0XYZAJ',
+    event_time: 1632215355,
+    authorizations: [],
+    is_ext_shared_channel: false,
+    event_context: '4-eyJldCI6Im1lcXYZVKUDFEVUZOIn0',
+  },
+  rawBody: '{"token":"QEJXYZZyke","team_id":"T0XYZ39","api_app_id":"A02XYZTH","event":{"client_msg_id":"9b073bdd-e717-4f47-a08e-c860f0ac32e5","type":"message","text":"ab blocket","user":"U0XYZQE7","ts":"1632215355.002000","team":"T0XYZ39","blocks":[],"channel":"D02XYZUFN","event_ts":"1632215355.002000","channel_type":"im"},"type":"event_callback","event_id":"Ev0XYZAJ","event_time":1632215355,"authorizations":[],"is_ext_shared_channel":false,"event_context":"4-eyJldCI6Im1lcXYZVKUDFEVUZOIn0"}',
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'User-Agent': 'Slackbot 1.0 (+https://api.slack.com/robots)',
+    'X-Slack-Request-Timestamp': '1632215356',
+    'X-Slack-Signature': 'v0=cf3ed11fe4f07fc14e8f7ae2b5b9d93092f1ed45418fa811b627e4e0c60f38ec',
+  },
+};
