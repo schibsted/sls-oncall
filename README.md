@@ -5,7 +5,7 @@ Slack bot that fetches user oncall given a schedule in PagerDuty.
 ![Infrastructure](infra.png)
 
 This version of the app was made in conjuntion with the Schibsted engineering article
-[Slack bot with Serverless Framework](https://medium.com/schibsted-engineering).
+[Slack bot with Serverless Framework](https://medium.com/schibsted-engineering/slack-bot-with-serverless-framework-e96fcdbd83a0).
 
 ## Setup
 
@@ -23,7 +23,7 @@ Edit teams.json and add team name to schedule mappings
 
 ## Deployment
 
-Make sure your are authed with vaulted, with the role for the correct environment.
+Make sure you have your credentials configured for the AWS CLI.
 
 Before the first ever deploy in a environment, PagerDuty and Slack tokens need
 to be stored in AWS Parameter Store under AWS Systems Manager.
@@ -33,6 +33,10 @@ $ aws ssm put-parameter --region=eu-west-1 --name "/sls-oncall/pd-token" --type 
 $ aws ssm put-parameter --region=eu-west-1 --name "/sls-oncall/slack-token" --type "SecureString" --value "<YOUR SLACK TOKEN>"
 $ aws ssm put-parameter --region=eu-west-1 --name "/sls-oncall/slack-signsecret" --type "SecureString" --value "<YOUR SLACK SIGN SECRET>"
 ```
+
+You also need to setup the Slack app and respond to the Slack challenge.
+Comment out `async: true` in the [serverless.yml](serverless.yml) file and deploy.
+Once you have verified the url with Slack, comment it in and deploy again.
 
 ```bash
 $ npx sls deploy --stage pro
